@@ -1,0 +1,46 @@
+#load "core/std"
+#load "./module"
+
+use core {package, *}
+use cbindgen {*}
+use opencl
+
+main :: () {
+    path := module_path(#file);
+
+    c_file_path := string.concat(path, "opencl.c");
+
+    result := generate_c_binding(.{
+        output_file = c_file_path,
+        foreign_block = opencl.foreign_block,
+
+        cast_map = .[
+            .{ opencl.cl_platform_id, "cl_platform_id" },
+            .{ opencl.cl_device_id, "cl_device_id" },
+            .{ opencl.cl_context, "cl_context" },
+            .{ opencl.cl_command_queue, "cl_command_queue" },
+            .{ opencl.cl_mem, "cl_mem" },
+            .{ opencl.cl_program, "cl_program" },
+            .{ opencl.cl_kernel, "cl_kernel" },
+            .{ opencl.cl_event, "cl_event" },
+            .{ opencl.cl_sampler, "cl_sampler" },
+        ],
+
+        preamble = .[
+"""
+#include <CL/cl.h>
+"""
+        ],
+    });
+
+    if !result {
+        os.exit(1);
+    }
+
+    result = compile_c_file(c_file_path, string.concat(path, "onyx_opencl"), libraries=.["OpenCL"]);
+    if !result {
+        os.exit(1);
+    }
+
+    os.remove_file(c_file_path);
+}

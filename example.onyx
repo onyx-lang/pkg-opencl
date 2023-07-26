@@ -1,0 +1,25 @@
+#load "./module"
+
+use core {println}
+use opencl {*}
+
+main :: () {
+    platforms: [10] cl_platform_id;
+    devices: [10] cl_device_id;
+
+    num_platforms, num_devices: u32;
+    err: i32;
+
+    err = clGetPlatformIDs(10, ~~platforms, &num_platforms);
+    err = clGetDeviceIDs(platforms[0], CL_DEVICE_TYPE_GPU, 10, ~~devices, &num_devices);
+    
+    context := clCreateContext(null, num_devices, ~~devices, null, null, &err);
+
+    queue := clCreateCommandQueueWithProperties(context, devices[0], null, &err);
+
+    println(context);
+    println(queue);
+
+    clReleaseCommandQueue(queue);
+    clReleaseContext(context);
+}
