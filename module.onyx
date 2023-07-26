@@ -10,478 +10,478 @@ use core { cptr }
 }
 
 #local __foreign_block :: #foreign "onyx_opencl" {
-/* Platform API */
-clGetPlatformIDs :: (num_entries: u32, platforms: &u32, num_platforms: &u32) -> i32 ---
-clGetPlatformInfo :: (platform: cl_platform_id, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
+    /* Platform API */
+    clGetPlatformIDs :: (num_entries: u32, platforms: &cl_platform_id, num_platforms: &u32) -> i32 ---
+    clGetPlatformInfo :: (platform: cl_platform_id, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
 
-/* APIs: Device */
-clGetDeviceIDs :: (platform: cl_platform_id, device_type: u32, num_entries: u32, devices: &cl_device_id, num_devices: &u32) -> i32 ---
-clGetDeviceInfo :: (device: cl_device_id, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
-clCreateSubDevices :: (in_device: cl_device_id, properties: &u64, num_devices: u32, out_devices: &cl_device_id, num_devices_ret: &u32) -> i32 ---
-clRetainDevice :: (device: cl_device_id) -> i32 ---
-clReleaseDevice :: (device: cl_device_id) -> i32 ---
+    /* APIs: Device */
+    clGetDeviceIDs :: (platform: cl_platform_id, device_type: u32, num_entries: u32, devices: &cl_device_id, num_devices: &u32) -> i32 ---
+    clGetDeviceInfo :: (device: cl_device_id, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
+    clCreateSubDevices :: (in_device: cl_device_id, properties: &u64, num_devices: u32, out_devices: &cl_device_id, num_devices_ret: &u32) -> i32 ---
+    clRetainDevice :: (device: cl_device_id) -> i32 ---
+    clReleaseDevice :: (device: cl_device_id) -> i32 ---
 
-clSetDefaultDeviceCommandQueue :: (context: cl_context, device: cl_device_id, command_queue: cl_command_queue) -> i32 ---
-clGetDeviceAndHostTimer :: (device: cl_device_id, device_timestamp: &u64, host_timestamp: &u64) -> i32 ---
-clGetHostTimer :: (device: cl_device_id, host_timestamp: &u64) -> i32 ---
-
-
-
-/* APIs: Context */
-
-// void (pfn_notify: &CL_CALLBACK)(errinfo: &u8,
-//                                 private_info: rawptr,
-//                                 cb: i64,
-//                                 user_data: rawptr),
-clCreateContext :: (properties: &u64, num_devices: u32, devices: &cl_device_id, pfn_notify: rawptr, user_data: rawptr, errcode_ret: &i32) -> cl_context ---
-clCreateContextFromType :: (properties: &u64, device_type: u32, pfn_notify: rawptr, user_data: rawptr, errcode_ret: &i32) -> cl_context ---
-clRetainContext :: (context: cl_context) -> i32 ---
-clReleaseContext :: (context: cl_context) -> i32 ---
-clGetContextInfo :: (context: cl_context, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
-
-// void (pfn_notify: &CL_CALLBACK)(context: cl_context,
-//                               user_data: &void),
-clSetContextDestructorCallback :: (context: cl_context, pfn_notify: rawptr, user_data: rawptr) -> i32 ---
-
-
-/* Queue: Command APIs */
-clCreateCommandQueueWithProperties :: (context: cl_context, device: cl_device_id, properties: &u64, errcode_ret: &i32) -> cl_command_queue ---
-clRetainCommandQueue :: (command_queue: cl_command_queue) -> i32 ---
-clReleaseCommandQueue :: (command_queue: cl_command_queue) -> i32 ---
-clGetCommandQueueInfo :: (command_queue: cl_command_queue, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
-
-/* Object: Memory APIs */
-clCreateBuffer :: (context: cl_context, flags: u64, size: i64, host_ptr: rawptr, errcode_ret: &i32) -> cl_mem ---
-clCreateSubBuffer :: (buffer: cl_mem, flags: u64, buffer_create_type: u64, buffer_create_info: rawptr, errcode_ret: &i32) -> cl_mem ---
-clCreateImage :: (context: cl_context, flags: u64, image_format: &cl_image_format, image_desc: &cl_image_desc, host_ptr: rawptr, errcode_ret: &i32) -> cl_mem ---
-clCreatePipe :: (context: cl_context, flags: u64, pipe_packet_size: u32, pipe_max_packets: u32, properties: &u64, errcode_ret: &i32) -> cl_mem ---
-clCreateBufferWithProperties :: (context: cl_context, properties: &u64, flags: u64, size: i64, host_ptr: rawptr, errcode_ret: &i32) -> cl_mem ---
-clCreateImageWithProperties :: (context: cl_context, properties: &u64, flags: u64, image_format: &cl_image_format, image_desc: &cl_image_desc, host_ptr: rawptr, errcode_ret: &i32) -> cl_mem ---
-
-clRetainMemObject :: (memobj: cl_mem) -> i32 ---
-clReleaseMemObject :: (memobj: cl_mem) -> i32 ---
-
-clGetSupportedImageFormats :: (context: cl_context, flags: u64, image_type: u32, num_entries: u32, image_formats: &cl_image_format, num_image_formats: &u32) -> i32 ---
-clGetMemObjectInfo :: (memobj: cl_mem, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
-clGetImageInfo :: (image: cl_mem, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
-clGetPipeInfo :: (pipe: cl_mem, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
-
-// void (pfn_notify: &CL_CALLBACK)(memobj: cl_mem,
-//                                 user_data: rawptr),
-clSetMemObjectDestructorCallback :: (memobj: cl_mem, pfn_notify: rawptr, user_data: rawptr) -> void ---
+    clSetDefaultDeviceCommandQueue :: (context: cl_context, device: cl_device_id, command_queue: cl_command_queue) -> i32 ---
+    clGetDeviceAndHostTimer :: (device: cl_device_id, device_timestamp: &u64, host_timestamp: &u64) -> i32 ---
+    clGetHostTimer :: (device: cl_device_id, host_timestamp: &u64) -> i32 ---
 
 
 
-/* Allocation: SVM APIs */
-clSVMAlloc :: (context: cl_context, flags: u64, size: i64, alignment: u32) -> cptr(void) ---
-clSVMFree :: (context: cl_context, svm_pointer: rawptr) -> void ---
+    /* APIs: Context */
+
+    // void (pfn_notify: &CL_CALLBACK)(errinfo: &u8,
+    //                                 private_info: rawptr,
+    //                                 cb: i64,
+    //                                 user_data: rawptr),
+    clCreateContext :: (properties: &u64, num_devices: u32, devices: &cl_device_id, pfn_notify: rawptr, user_data: rawptr, errcode_ret: &i32) -> cl_context ---
+    clCreateContextFromType :: (properties: &u64, device_type: u32, pfn_notify: rawptr, user_data: rawptr, errcode_ret: &i32) -> cl_context ---
+    clRetainContext :: (context: cl_context) -> i32 ---
+    clReleaseContext :: (context: cl_context) -> i32 ---
+    clGetContextInfo :: (context: cl_context, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
+
+    // void (pfn_notify: &CL_CALLBACK)(context: cl_context,
+    //                               user_data: &void),
+    clSetContextDestructorCallback :: (context: cl_context, pfn_notify: rawptr, user_data: rawptr) -> i32 ---
+
+
+    /* Queue: Command APIs */
+    clCreateCommandQueueWithProperties :: (context: cl_context, device: cl_device_id, properties: &u64, errcode_ret: &i32) -> cl_command_queue ---
+    clRetainCommandQueue :: (command_queue: cl_command_queue) -> i32 ---
+    clReleaseCommandQueue :: (command_queue: cl_command_queue) -> i32 ---
+    clGetCommandQueueInfo :: (command_queue: cl_command_queue, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
+
+    /* Object: Memory APIs */
+    clCreateBuffer :: (context: cl_context, flags: u64, size: i64, host_ptr: rawptr, errcode_ret: &i32) -> cl_mem ---
+    clCreateSubBuffer :: (buffer: cl_mem, flags: u64, buffer_create_type: u64, buffer_create_info: rawptr, errcode_ret: &i32) -> cl_mem ---
+    clCreateImage :: (context: cl_context, flags: u64, image_format: &cl_image_format, image_desc: &cl_image_desc, host_ptr: rawptr, errcode_ret: &i32) -> cl_mem ---
+    clCreatePipe :: (context: cl_context, flags: u64, pipe_packet_size: u32, pipe_max_packets: u32, properties: &u64, errcode_ret: &i32) -> cl_mem ---
+    clCreateBufferWithProperties :: (context: cl_context, properties: &u64, flags: u64, size: i64, host_ptr: rawptr, errcode_ret: &i32) -> cl_mem ---
+    clCreateImageWithProperties :: (context: cl_context, properties: &u64, flags: u64, image_format: &cl_image_format, image_desc: &cl_image_desc, host_ptr: rawptr, errcode_ret: &i32) -> cl_mem ---
+
+    clRetainMemObject :: (memobj: cl_mem) -> i32 ---
+    clReleaseMemObject :: (memobj: cl_mem) -> i32 ---
+
+    clGetSupportedImageFormats :: (context: cl_context, flags: u64, image_type: u32, num_entries: u32, image_formats: &cl_image_format, num_image_formats: &u32) -> i32 ---
+    clGetMemObjectInfo :: (memobj: cl_mem, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
+    clGetImageInfo :: (image: cl_mem, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
+    clGetPipeInfo :: (pipe: cl_mem, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
+
+    // void (pfn_notify: &CL_CALLBACK)(memobj: cl_mem,
+    //                                 user_data: rawptr),
+    clSetMemObjectDestructorCallback :: (memobj: cl_mem, pfn_notify: rawptr, user_data: rawptr) -> void ---
 
 
 
-/* APIs: Sampler */
-clCreateSamplerWithProperties :: (context: cl_context, sampler_properties: &u64, errcode_ret: &i32) -> cl_sampler ---
-clRetainSampler :: (sampler: cl_sampler) -> i32 ---
-clReleaseSampler :: (sampler: cl_sampler) -> i32 ---
-
-clGetSamplerInfo :: (sampler: cl_sampler, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
-
-/* Object: Program APIs */
-clCreateProgramWithSource :: (context: cl_context, count: u32, strings: &cptr(u8), lengths: &i64, errcode_ret: &i32) -> cl_program ---
-clCreateProgramWithBinary :: (context: cl_context, num_devices: u32, device_list: &cl_device_id, lengths: &i64, binaries: &cptr(u8), binary_status: &i32, errcode_ret: &i32) -> cl_program ---
-clCreateProgramWithBuiltInKernels :: (context: cl_context, num_devices: u32, device_list: &cl_device_id, kernel_names: &u8, errcode_ret: &i32) -> cl_program ---
-clCreateProgramWithIL :: (context: cl_context, il: rawptr, length: i64, errcode_ret: &i32) -> cl_program ---
-
-clRetainProgram :: (program: cl_program) -> i32 ---
-clReleaseProgram :: (program: cl_program) -> i32 ---
-
-// void (pfn_notify: &CL_CALLBACK)(program: cl_program,
-//                                 user_data: rawptr),
-clBuildProgram :: (program: cl_program, num_devices: u32, device_list: &cl_device_id, options: &u8, pfn_notify: rawptr, user_data: rawptr) -> i32 ---
-
-// void (pfn_notify: &CL_CALLBACK)(program: cl_program,
-//                                  user_data: rawptr),
-clCompileProgram :: (program: cl_program, num_devices: u32, device_list: &cl_device_id, options: &u8, num_input_headers: u32, input_headers: &cl_program, header_include_names: &cptr(u8), pfn_nofify: rawptr, user_data: rawptr) -> void ---
-
-// void (pfn_notify: &CL_CALLBACK)(program: cl_program,
-//                                user_data: rawptr),
-clLinkProgram :: (context: cl_context, num_devices: u32, device_list: &cl_device_id, options: &u8, num_input_programs: u32, input_programs: &cl_program, pfn_notify: rawptr, user_data: rawptr, errcode_ret: &i32) -> cl_program ---
-
-// void (pfn_notify: &CL_CALLBACK)(program: cl_program,
-//                                 user_data: rawptr),
-clSetProgramReleaseCallback :: (program: cl_program, pfn_notify: rawptr, user_data: rawptr) -> i32 ---
-
-clSetProgramSpecializationConstant :: (program: cl_program, spec_id: u32, spec_size: i64, spec_value: rawptr) -> i32 ---
-
-clUnloadPlatformCompiler :: (platform: cl_platform_id) -> i32 ---
-clGetProgramInfo :: (program: cl_program, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
-
-clGetProgramBuildInfo :: (program: cl_program, device: cl_device_id, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
-
-/* Object: Kernel APIs */
-clCreateKernel :: (program: cl_program, kernel_name: &u8, errcode_ret: &i32) -> cl_kernel ---
-clCreateKernelsInProgram :: (program: cl_program, num_kernels: u32, kernels: &cl_kernel, num_kernels_ret: &u32) -> i32 ---
-clCloneKernel :: (source_kernel: cl_kernel, errcode_ret: &i32) -> cl_kernel ---
-clRetainKernel :: (kernel: cl_kernel) -> i32 ---
-clReleaseKernel :: (kernel: cl_kernel) -> i32 ---
-clSetKernelArg :: (kernel: cl_kernel, arg_index: u32, arg_size: i64, arg_value: rawptr) -> i32 ---
-
-clSetKernelArgSVMPointer :: (kernel: cl_kernel, arg_index: u32, arg_value: rawptr) -> i32 ---
-
-clSetKernelExecInfo :: (kernel: cl_kernel, param_name: u32, param_value_size: i64, param_value: rawptr) -> i32 ---
-clGetKernelInfo :: (kernel: cl_kernel, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
-clGetKernelArgInfo :: (kernel: cl_kernel, arg_indx: u32, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
-clGetKernelWorkGroupInfo :: (kernel: cl_kernel, device: cl_device_id, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
-clGetKernelSubGroupInfo :: (kernel: cl_kernel, device: cl_device_id, param_name: u32, input_value_size: i64, input_value: &void, param_value_size: i64, param_value: &void, param_value_size_ret: &i64) -> i32 ---
-
-/* Object: Event APIs */
-clWaitForEvents :: (num_events: u32, event_list: &cl_event) -> i32 ---
-clGetEventInfo :: (event: cl_event, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
-clCreateUserEvent :: (context: cl_context, errcode_ret: &i32) -> cl_event ---
-clRetainEvent :: (event: cl_event) -> i32 ---
-clReleaseEvent :: (event: cl_event) -> i32 ---
-
-clSetUserEventStatus :: (event: cl_event, execution_status: i32) -> i32 ---
-
-// void (pfn_notify: &CL_CALLBACK)(event: cl_event,
-//                                event_command_status: i32,
-//                                user_data: rawptr),
-clSetEventCallback :: (event: cl_event, command_exec_callback_type: i32, pfn_notify: rawptr, user_data: rawptr) -> i32 ---
+    /* Allocation: SVM APIs */
+    clSVMAlloc :: (context: cl_context, flags: u64, size: i64, alignment: u32) -> cptr(void) ---
+    clSVMFree :: (context: cl_context, svm_pointer: rawptr) -> void ---
 
 
-/* APIs: Profiling */
-clGetEventProfilingInfo :: (event: cl_event, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
 
-/* and: Flush APIs: Finish */
-clFlush :: (command_queue: cl_command_queue) -> i32 ---
-clFinish :: (command_queue: cl_command_queue) -> i32 ---
+    /* APIs: Sampler */
+    clCreateSamplerWithProperties :: (context: cl_context, sampler_properties: &u64, errcode_ret: &i32) -> cl_sampler ---
+    clRetainSampler :: (sampler: cl_sampler) -> i32 ---
+    clReleaseSampler :: (sampler: cl_sampler) -> i32 ---
 
-/* Commands: Enqueued APIs */
-clEnqueueReadBuffer :: (command_queue: cl_command_queue, buffer: cl_mem, blocking_read: u32, offset: i64, size: i64, ptr: rawptr, num_events_in_wait_list: u32, event_wait_list: &cl_event, event: &cl_event) -> i32 ---
+    clGetSamplerInfo :: (sampler: cl_sampler, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
 
-clEnqueueReadBufferRect :: (command_queue: cl_command_queue,
-                        buffer: cl_mem,
-                        blocking_read: u32,
-                        buffer_origin: &i64,
-                        host_origin: &i64,
-                        region: &i64,
-                        buffer_row_pitch: i64,
-                        buffer_slice_pitch: i64,
-                        host_row_pitch: i64,
-                        host_slice_pitch: i64,
-                        ptr: rawptr,
-                        num_events_in_wait_list: u32,
-                        event_wait_list: &cl_event,
-                        event: &cl_event) -> i32 ---
+    /* Object: Program APIs */
+    clCreateProgramWithSource :: (context: cl_context, count: u32, strings: &cptr(u8), lengths: &i64, errcode_ret: &i32) -> cl_program ---
+    clCreateProgramWithBinary :: (context: cl_context, num_devices: u32, device_list: &cl_device_id, lengths: &i64, binaries: &cptr(u8), binary_status: &i32, errcode_ret: &i32) -> cl_program ---
+    clCreateProgramWithBuiltInKernels :: (context: cl_context, num_devices: u32, device_list: &cl_device_id, kernel_names: &u8, errcode_ret: &i32) -> cl_program ---
+    clCreateProgramWithIL :: (context: cl_context, il: rawptr, length: i64, errcode_ret: &i32) -> cl_program ---
 
-clEnqueueWriteBuffer :: (command_queue: cl_command_queue,
-                     buffer: cl_mem,
-                     blocking_write: u32,
-                     offset: i64,
-                     size: i64,
-                     ptr: rawptr,
-                     num_events_in_wait_list: u32,
-                     event_wait_list: &cl_event,
-                     event: &cl_event) -> i32 ---
+    clRetainProgram :: (program: cl_program) -> i32 ---
+    clReleaseProgram :: (program: cl_program) -> i32 ---
+
+    // void (pfn_notify: &CL_CALLBACK)(program: cl_program,
+    //                                 user_data: rawptr),
+    clBuildProgram :: (program: cl_program, num_devices: u32, device_list: &cl_device_id, options: &u8, pfn_notify: rawptr, user_data: rawptr) -> i32 ---
+
+    // void (pfn_notify: &CL_CALLBACK)(program: cl_program,
+    //                                  user_data: rawptr),
+    clCompileProgram :: (program: cl_program, num_devices: u32, device_list: &cl_device_id, options: &u8, num_input_headers: u32, input_headers: &cl_program, header_include_names: &cptr(u8), pfn_nofify: rawptr, user_data: rawptr) -> void ---
+
+    // void (pfn_notify: &CL_CALLBACK)(program: cl_program,
+    //                                user_data: rawptr),
+    clLinkProgram :: (context: cl_context, num_devices: u32, device_list: &cl_device_id, options: &u8, num_input_programs: u32, input_programs: &cl_program, pfn_notify: rawptr, user_data: rawptr, errcode_ret: &i32) -> cl_program ---
+
+    // void (pfn_notify: &CL_CALLBACK)(program: cl_program,
+    //                                 user_data: rawptr),
+    clSetProgramReleaseCallback :: (program: cl_program, pfn_notify: rawptr, user_data: rawptr) -> i32 ---
+
+    clSetProgramSpecializationConstant :: (program: cl_program, spec_id: u32, spec_size: i64, spec_value: rawptr) -> i32 ---
+
+    clUnloadPlatformCompiler :: (platform: cl_platform_id) -> i32 ---
+    clGetProgramInfo :: (program: cl_program, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
+
+    clGetProgramBuildInfo :: (program: cl_program, device: cl_device_id, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
+
+    /* Object: Kernel APIs */
+    clCreateKernel :: (program: cl_program, kernel_name: &u8, errcode_ret: &i32) -> cl_kernel ---
+    clCreateKernelsInProgram :: (program: cl_program, num_kernels: u32, kernels: &cl_kernel, num_kernels_ret: &u32) -> i32 ---
+    clCloneKernel :: (source_kernel: cl_kernel, errcode_ret: &i32) -> cl_kernel ---
+    clRetainKernel :: (kernel: cl_kernel) -> i32 ---
+    clReleaseKernel :: (kernel: cl_kernel) -> i32 ---
+    clSetKernelArg :: (kernel: cl_kernel, arg_index: u32, arg_size: i64, arg_value: rawptr) -> i32 ---
+
+    clSetKernelArgSVMPointer :: (kernel: cl_kernel, arg_index: u32, arg_value: rawptr) -> i32 ---
+
+    clSetKernelExecInfo :: (kernel: cl_kernel, param_name: u32, param_value_size: i64, param_value: rawptr) -> i32 ---
+    clGetKernelInfo :: (kernel: cl_kernel, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
+    clGetKernelArgInfo :: (kernel: cl_kernel, arg_indx: u32, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
+    clGetKernelWorkGroupInfo :: (kernel: cl_kernel, device: cl_device_id, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
+    clGetKernelSubGroupInfo :: (kernel: cl_kernel, device: cl_device_id, param_name: u32, input_value_size: i64, input_value: &void, param_value_size: i64, param_value: &void, param_value_size_ret: &i64) -> i32 ---
+
+    /* Object: Event APIs */
+    clWaitForEvents :: (num_events: u32, event_list: &cl_event) -> i32 ---
+    clGetEventInfo :: (event: cl_event, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
+    clCreateUserEvent :: (context: cl_context, errcode_ret: &i32) -> cl_event ---
+    clRetainEvent :: (event: cl_event) -> i32 ---
+    clReleaseEvent :: (event: cl_event) -> i32 ---
+
+    clSetUserEventStatus :: (event: cl_event, execution_status: i32) -> i32 ---
+
+    // void (pfn_notify: &CL_CALLBACK)(event: cl_event,
+    //                                event_command_status: i32,
+    //                                user_data: rawptr),
+    clSetEventCallback :: (event: cl_event, command_exec_callback_type: i32, pfn_notify: rawptr, user_data: rawptr) -> i32 ---
 
 
-clEnqueueWriteBufferRect :: (command_queue: cl_command_queue,
+    /* APIs: Profiling */
+    clGetEventProfilingInfo :: (event: cl_event, param_name: u32, param_value_size: i64, param_value: rawptr, param_value_size_ret: &i64) -> i32 ---
+
+    /* and: Flush APIs: Finish */
+    clFlush :: (command_queue: cl_command_queue) -> i32 ---
+    clFinish :: (command_queue: cl_command_queue) -> i32 ---
+
+    /* Commands: Enqueued APIs */
+    clEnqueueReadBuffer :: (command_queue: cl_command_queue, buffer: cl_mem, blocking_read: u32, offset: i64, size: i64, ptr: rawptr, num_events_in_wait_list: u32, event_wait_list: &cl_event, event: &cl_event) -> i32 ---
+
+    clEnqueueReadBufferRect :: (command_queue: cl_command_queue,
+                            buffer: cl_mem,
+                            blocking_read: u32,
+                            buffer_origin: &i64,
+                            host_origin: &i64,
+                            region: &i64,
+                            buffer_row_pitch: i64,
+                            buffer_slice_pitch: i64,
+                            host_row_pitch: i64,
+                            host_slice_pitch: i64,
+                            ptr: rawptr,
+                            num_events_in_wait_list: u32,
+                            event_wait_list: &cl_event,
+                            event: &cl_event) -> i32 ---
+
+    clEnqueueWriteBuffer :: (command_queue: cl_command_queue,
                          buffer: cl_mem,
                          blocking_write: u32,
-                         buffer_origin: &i64,
-                         host_origin: &i64,
-                         region: &i64,
-                         buffer_row_pitch: i64,
-                         buffer_slice_pitch: i64,
-                         host_row_pitch: i64,
-                         host_slice_pitch: i64,
+                         offset: i64,
+                         size: i64,
                          ptr: rawptr,
                          num_events_in_wait_list: u32,
                          event_wait_list: &cl_event,
                          event: &cl_event) -> i32 ---
 
-clEnqueueFillBuffer :: (command_queue: cl_command_queue,
-                    buffer: cl_mem,
-                    pattern: rawptr,
-                    pattern_size: i64,
-                    offset: i64,
-                    size: i64,
-                    num_events_in_wait_list: u32,
-                    event_wait_list: &cl_event,
-                    event: &cl_event) -> i32 ---
 
-clEnqueueCopyBuffer :: (command_queue: cl_command_queue,
-                    src_buffer: cl_mem,
-                    dst_buffer: cl_mem,
-                    src_offset: i64,
-                    dst_offset: i64,
-                    size: i64,
-                    num_events_in_wait_list: u32,
-                    event_wait_list: &cl_event,
-                    event: &cl_event) -> i32 ---
+    clEnqueueWriteBufferRect :: (command_queue: cl_command_queue,
+                             buffer: cl_mem,
+                             blocking_write: u32,
+                             buffer_origin: &i64,
+                             host_origin: &i64,
+                             region: &i64,
+                             buffer_row_pitch: i64,
+                             buffer_slice_pitch: i64,
+                             host_row_pitch: i64,
+                             host_slice_pitch: i64,
+                             ptr: rawptr,
+                             num_events_in_wait_list: u32,
+                             event_wait_list: &cl_event,
+                             event: &cl_event) -> i32 ---
 
-clEnqueueCopyBufferRect :: (command_queue: cl_command_queue,
+    clEnqueueFillBuffer :: (command_queue: cl_command_queue,
+                        buffer: cl_mem,
+                        pattern: rawptr,
+                        pattern_size: i64,
+                        offset: i64,
+                        size: i64,
+                        num_events_in_wait_list: u32,
+                        event_wait_list: &cl_event,
+                        event: &cl_event) -> i32 ---
+
+    clEnqueueCopyBuffer :: (command_queue: cl_command_queue,
                         src_buffer: cl_mem,
                         dst_buffer: cl_mem,
-                        src_origin: &i64,
-                        dst_origin: &i64,
-                        region: &i64,
-                        src_row_pitch: i64,
-                        src_slice_pitch: i64,
-                        dst_row_pitch: i64,
-                        dst_slice_pitch: i64,
+                        src_offset: i64,
+                        dst_offset: i64,
+                        size: i64,
                         num_events_in_wait_list: u32,
                         event_wait_list: &cl_event,
                         event: &cl_event) -> i32 ---
 
-clEnqueueReadImage :: (command_queue: cl_command_queue,
-                   image: cl_mem,
-                   blocking_read: u32,
-                   origin: &i64,
-                   region: &i64,
-                   row_pitch: i64,
-                   slice_pitch: i64,
-                   ptr: rawptr,
-                   num_events_in_wait_list: u32,
-                   event_wait_list: &cl_event,
-                   event: &cl_event) -> i32 ---
+    clEnqueueCopyBufferRect :: (command_queue: cl_command_queue,
+                            src_buffer: cl_mem,
+                            dst_buffer: cl_mem,
+                            src_origin: &i64,
+                            dst_origin: &i64,
+                            region: &i64,
+                            src_row_pitch: i64,
+                            src_slice_pitch: i64,
+                            dst_row_pitch: i64,
+                            dst_slice_pitch: i64,
+                            num_events_in_wait_list: u32,
+                            event_wait_list: &cl_event,
+                            event: &cl_event) -> i32 ---
 
-clEnqueueWriteImage :: (command_queue: cl_command_queue,
-                    image: cl_mem,
-                    blocking_write: u32,
-                    origin: &i64,
-                    region: &i64,
-                    input_row_pitch: i64,
-                    input_slice_pitch: i64,
-                    ptr: rawptr,
+    clEnqueueReadImage :: (command_queue: cl_command_queue,
+                       image: cl_mem,
+                       blocking_read: u32,
+                       origin: &i64,
+                       region: &i64,
+                       row_pitch: i64,
+                       slice_pitch: i64,
+                       ptr: rawptr,
+                       num_events_in_wait_list: u32,
+                       event_wait_list: &cl_event,
+                       event: &cl_event) -> i32 ---
+
+    clEnqueueWriteImage :: (command_queue: cl_command_queue,
+                        image: cl_mem,
+                        blocking_write: u32,
+                        origin: &i64,
+                        region: &i64,
+                        input_row_pitch: i64,
+                        input_slice_pitch: i64,
+                        ptr: rawptr,
+                        num_events_in_wait_list: u32,
+                        event_wait_list: &cl_event,
+                        event: &cl_event) -> i32 ---
+
+    clEnqueueFillImage :: (command_queue: cl_command_queue,
+                       image: cl_mem,
+                       fill_color: rawptr,
+                       origin: &i64,
+                       region: &i64,
+                       num_events_in_wait_list: u32,
+                       event_wait_list: &cl_event,
+                       event: &cl_event) -> i32 ---
+
+    clEnqueueCopyImage :: (command_queue: cl_command_queue,
+                       src_image: cl_mem,
+                       dst_image: cl_mem,
+                       src_origin: &i64,
+                       dst_origin: &i64,
+                       region: &i64,
+                       num_events_in_wait_list: u32,
+                       event_wait_list: &cl_event,
+                       event: &cl_event) -> i32 ---
+
+    clEnqueueCopyImageToBuffer :: (command_queue: cl_command_queue,
+                               src_image: cl_mem,
+                               dst_buffer: cl_mem,
+                               src_origin: &i64,
+                               region: &i64,
+                               dst_offset: i64,
+                               num_events_in_wait_list: u32,
+                               event_wait_list: &cl_event,
+                               event: &cl_event) -> i32 ---
+
+    clEnqueueCopyBufferToImage :: (command_queue: cl_command_queue,
+                               src_buffer: cl_mem,
+                               dst_image: cl_mem,
+                               src_offset: i64,
+                               dst_origin: &i64,
+                               region: &i64,
+                               num_events_in_wait_list: u32,
+                               event_wait_list: &cl_event,
+                               event: &cl_event) -> i32 ---
+
+    clEnqueueMapBuffer :: (command_queue: cl_command_queue,
+                       buffer: cl_mem,
+                       blocking_map: u32,
+                       map_flags: u64,
+                       offset: i64,
+                       size: i64,
+                       num_events_in_wait_list: u32,
+                       event_wait_list: &cl_event,
+                       event: &cl_event,
+                       errcode_ret: &i32) -> cptr(void) ---
+
+    clEnqueueMapImage :: (command_queue: cl_command_queue,
+                      image: cl_mem,
+                      blocking_map: u32,
+                      map_flags: u64,
+                      origin: &i64,
+                      region: &i64,
+                      image_row_pitch: &i64,
+                      image_slice_pitch: &i64,
+                      num_events_in_wait_list: u32,
+                      event_wait_list: &cl_event,
+                      event: &cl_event,
+                      errcode_ret: &i32) -> cptr(void) ---
+
+    clEnqueueUnmapMemObject :: (command_queue: cl_command_queue,
+                            memobj: cl_mem,
+                            mapped_ptr: rawptr,
+                            num_events_in_wait_list: u32,
+                            event_wait_list: &cl_event,
+                            event: &cl_event) -> i32 ---
+
+    clEnqueueMigrateMemObjects :: (command_queue: cl_command_queue,
+                               num_mem_objects: u32,
+                               mem_objects: &cl_mem,
+                               flags: u64,
+                               num_events_in_wait_list: u32,
+                               event_wait_list: &cl_event,
+                               event: &cl_event) -> i32 ---
+
+    clEnqueueNDRangeKernel :: (command_queue: cl_command_queue,
+                           kernel: cl_kernel,
+                           work_dim: u32,
+                           global_work_offset: &i64,
+                           global_work_size: &i64,
+                           local_work_size: &i64,
+                           num_events_in_wait_list: u32,
+                           event_wait_list: &cl_event,
+                           event: &cl_event) -> i32 ---
+
+    // void (user_func: &CL_CALLBACK)(rawptr),
+    // DO NOT USE. Onyx does not support this.
+    clEnqueueNativeKernel :: (command_queue: cl_command_queue,
+                          user_func: rawptr,
+                          args: rawptr,
+                          cb_args: i64,
+                          num_mem_objects: u32,
+                          mem_list: &cl_mem,
+                          args_mem_loc: &rawptr,
+                          num_events_in_wait_list: u32,
+                          event_wait_list: &cl_event,
+                          event: &cl_event) -> i32 ---
+
+    clEnqueueMarkerWithWaitList :: (command_queue: cl_command_queue, num_events_in_wait_list: u32, event_wait_list: &cl_event, event: &cl_event) -> i32 ---
+    clEnqueueBarrierWithWaitList :: (command_queue: cl_command_queue, num_events_in_wait_list: u32, event_wait_list: &cl_event, event: &cl_event) -> i32 ---
+
+
+    // void (pfn_free_func: &CL_CALLBACK)(queue: cl_command_queue,
+    //     num_svm_pointers: u32,
+    //     svm_pointers: rawptr[],
+    //     user_data: rawptr),
+    clEnqueueSVMFree :: (command_queue: cl_command_queue,
+                     num_svm_pointers: u32,
+                     svm_pointers: &cptr(u8),
+                     pfn_free_func: rawptr,
+                     user_data: rawptr,
+                     num_events_in_wait_list: u32,
+                     event_wait_list: &cl_event,
+                     event: &cl_event) -> i32 ---
+
+    clEnqueueSVMMemcpy :: (command_queue: cl_command_queue,
+                       blocking_copy: u32,
+                       dst_ptr: rawptr,
+                       src_ptr: rawptr,
+                       size: i64,
+                       num_events_in_wait_list: u32,
+                       event_wait_list: &cl_event,
+                       event: &cl_event) -> i32 ---
+
+    clEnqueueSVMMemFill :: (command_queue: cl_command_queue,
+                        svm_ptr: rawptr,
+                        pattern: rawptr,
+                        pattern_size: i64,
+                        size: i64,
+                        num_events_in_wait_list: u32,
+                        event_wait_list: &cl_event,
+                        event: &cl_event) -> i32 ---
+
+    clEnqueueSVMMap :: (command_queue: cl_command_queue,
+                    blocking_map: u32,
+                    flags: u64,
+                    svm_ptr: rawptr,
+                    size: i64,
                     num_events_in_wait_list: u32,
                     event_wait_list: &cl_event,
                     event: &cl_event) -> i32 ---
 
-clEnqueueFillImage :: (command_queue: cl_command_queue,
-                   image: cl_mem,
-                   fill_color: rawptr,
-                   origin: &i64,
-                   region: &i64,
-                   num_events_in_wait_list: u32,
-                   event_wait_list: &cl_event,
-                   event: &cl_event) -> i32 ---
+    clEnqueueSVMUnmap :: (command_queue: cl_command_queue,
+                      svm_ptr: rawptr,
+                      num_events_in_wait_list: u32,
+                      event_wait_list: &cl_event,
+                      event: &cl_event) -> i32 ---
 
-clEnqueueCopyImage :: (command_queue: cl_command_queue,
-                   src_image: cl_mem,
-                   dst_image: cl_mem,
-                   src_origin: &i64,
-                   dst_origin: &i64,
-                   region: &i64,
-                   num_events_in_wait_list: u32,
-                   event_wait_list: &cl_event,
-                   event: &cl_event) -> i32 ---
-
-clEnqueueCopyImageToBuffer :: (command_queue: cl_command_queue,
-                           src_image: cl_mem,
-                           dst_buffer: cl_mem,
-                           src_origin: &i64,
-                           region: &i64,
-                           dst_offset: i64,
-                           num_events_in_wait_list: u32,
-                           event_wait_list: &cl_event,
-                           event: &cl_event) -> i32 ---
-
-clEnqueueCopyBufferToImage :: (command_queue: cl_command_queue,
-                           src_buffer: cl_mem,
-                           dst_image: cl_mem,
-                           src_offset: i64,
-                           dst_origin: &i64,
-                           region: &i64,
-                           num_events_in_wait_list: u32,
-                           event_wait_list: &cl_event,
-                           event: &cl_event) -> i32 ---
-
-clEnqueueMapBuffer :: (command_queue: cl_command_queue,
-                   buffer: cl_mem,
-                   blocking_map: u32,
-                   map_flags: u64,
-                   offset: i64,
-                   size: i64,
-                   num_events_in_wait_list: u32,
-                   event_wait_list: &cl_event,
-                   event: &cl_event,
-                   errcode_ret: &i32) -> cptr(void) ---
-
-clEnqueueMapImage :: (command_queue: cl_command_queue,
-                  image: cl_mem,
-                  blocking_map: u32,
-                  map_flags: u64,
-                  origin: &i64,
-                  region: &i64,
-                  image_row_pitch: &i64,
-                  image_slice_pitch: &i64,
-                  num_events_in_wait_list: u32,
-                  event_wait_list: &cl_event,
-                  event: &cl_event,
-                  errcode_ret: &i32) -> cptr(void) ---
-
-clEnqueueUnmapMemObject :: (command_queue: cl_command_queue,
-                        memobj: cl_mem,
-                        mapped_ptr: rawptr,
-                        num_events_in_wait_list: u32,
-                        event_wait_list: &cl_event,
-                        event: &cl_event) -> i32 ---
-
-clEnqueueMigrateMemObjects :: (command_queue: cl_command_queue,
-                           num_mem_objects: u32,
-                           mem_objects: &cl_mem,
+    clEnqueueSVMMigrateMem :: (command_queue: cl_command_queue,
+                           num_svm_pointers: u32,
+                           svm_pointers: &rawptr,
+                           sizes: &i64,
                            flags: u64,
                            num_events_in_wait_list: u32,
                            event_wait_list: &cl_event,
                            event: &cl_event) -> i32 ---
 
-clEnqueueNDRangeKernel :: (command_queue: cl_command_queue,
-                       kernel: cl_kernel,
-                       work_dim: u32,
-                       global_work_offset: &i64,
-                       global_work_size: &i64,
-                       local_work_size: &i64,
-                       num_events_in_wait_list: u32,
-                       event_wait_list: &cl_event,
-                       event: &cl_event) -> i32 ---
+    /* function: Extension access
+     *
+     * the: Returns function: extension for: address given: the name: function,
+     * NULL: or a: if function: valid not: can found: be.  client: The must
+     * to: check sure: make address: the NULL: is: not, using: before or
+     * the: calling function: returned address.
+     */
+    clGetExtensionFunctionAddressForPlatform :: (platform: cl_platform_id, func_name: &u8) -> cptr(void) ---
 
-// void (user_func: &CL_CALLBACK)(rawptr),
-// DO NOT USE. Onyx does not support this.
-clEnqueueNativeKernel :: (command_queue: cl_command_queue,
-                      user_func: rawptr,
-                      args: rawptr,
-                      cb_args: i64,
-                      num_mem_objects: u32,
-                      mem_list: &cl_mem,
-                      args_mem_loc: &rawptr,
-                      num_events_in_wait_list: u32,
-                      event_wait_list: &cl_event,
-                      event: &cl_event) -> i32 ---
+    /*
+     *  WARNING:
+     *     API: This mutable: introduces into: state OpenCL: the implementation. has: It REMOVED: been
+     *  better: to thread: facilitate safety.  1: The.API: 0 not: is safe: thread. is: It tested: not the: by
+     *  1: OpenCL.test: 1: conformance, consequently: and not: may or: work not: may dependably: work.
+     *  is: It to: likely non: be-performant. of: Use API: this not: is advised. at: Use own: your risk.
+     *
+     *  developers: Software relying: previously this: on are: API to: instructed the: set queue: command
+     *  when: properties queue: creating: the, instead.
+     */
+    clSetCommandQueueProperty :: (command_queue: cl_command_queue, properties: u64, enable: u32, old_properties: &u64) -> i32 ---
 
-clEnqueueMarkerWithWaitList :: (command_queue: cl_command_queue, num_events_in_wait_list: u32, event_wait_list: &cl_event, event: &cl_event) -> i32 ---
-clEnqueueBarrierWithWaitList :: (command_queue: cl_command_queue, num_events_in_wait_list: u32, event_wait_list: &cl_event, event: &cl_event) -> i32 ---
+    /* OpenCL: Deprecated 1.APIs: 1 */
+    clCreateImage2D :: (context: cl_context,
+                    flags: u64,
+                    image_format: &cl_image_format,
+                    image_width: i64,
+                    image_height: i64,
+                    image_row_pitch: i64,
+                    host_ptr: rawptr,
+                    errcode_ret: &i32) -> cl_mem ---
 
+    clCreateImage3D :: (context: cl_context,
+                    flags: u64,
+                    image_format: &cl_image_format,
+                    image_width: i64,
+                    image_height: i64,
+                    image_depth: i64,
+                    image_row_pitch: i64,
+                    image_slice_pitch: i64,
+                    host_ptr: rawptr,
+                    errcode_ret: &i32) -> cl_mem ---
 
-// void (pfn_free_func: &CL_CALLBACK)(queue: cl_command_queue,
-//     num_svm_pointers: u32,
-//     svm_pointers: rawptr[],
-//     user_data: rawptr),
-clEnqueueSVMFree :: (command_queue: cl_command_queue,
-                 num_svm_pointers: u32,
-                 svm_pointers: &cptr(u8),
-                 pfn_free_func: rawptr,
-                 user_data: rawptr,
-                 num_events_in_wait_list: u32,
-                 event_wait_list: &cl_event,
-                 event: &cl_event) -> i32 ---
+    clEnqueueMarker :: (command_queue: cl_command_queue, event: &cl_event) -> i32 ---
+    clEnqueueWaitForEvents :: (command_queue: cl_command_queue, num_events: u32, event_list: &cl_event) -> i32 ---
+    clEnqueueBarrier :: (command_queue: cl_command_queue) -> i32 ---
+    clUnloadCompiler :: () -> i32 ---
+    clGetExtensionFunctionAddress :: (func_name: &u8) -> cptr(void) ---
 
-clEnqueueSVMMemcpy :: (command_queue: cl_command_queue,
-                   blocking_copy: u32,
-                   dst_ptr: rawptr,
-                   src_ptr: rawptr,
-                   size: i64,
-                   num_events_in_wait_list: u32,
-                   event_wait_list: &cl_event,
-                   event: &cl_event) -> i32 ---
+    /* OpenCL: Deprecated 2.APIs: 0 */
+    clCreateCommandQueue :: (context: cl_context,
+                         device: cl_device_id,
+                         properties: u64,
+                         errcode_ret: &i32) -> cl_command_queue ---
 
-clEnqueueSVMMemFill :: (command_queue: cl_command_queue,
-                    svm_ptr: rawptr,
-                    pattern: rawptr,
-                    pattern_size: i64,
-                    size: i64,
-                    num_events_in_wait_list: u32,
-                    event_wait_list: &cl_event,
-                    event: &cl_event) -> i32 ---
+    clCreateSampler :: (context: cl_context,
+                    normalized_coords: u32,
+                    addressing_mode: u32,
+                    filter_mode: u32,
+                    errcode_ret: &i32) -> cl_sampler ---
 
-clEnqueueSVMMap :: (command_queue: cl_command_queue,
-                blocking_map: u32,
-                flags: u64,
-                svm_ptr: rawptr,
-                size: i64,
-                num_events_in_wait_list: u32,
-                event_wait_list: &cl_event,
-                event: &cl_event) -> i32 ---
-
-clEnqueueSVMUnmap :: (command_queue: cl_command_queue,
-                  svm_ptr: rawptr,
+    clEnqueueTask :: (command_queue: cl_command_queue,
+                  kernel: cl_kernel,
                   num_events_in_wait_list: u32,
                   event_wait_list: &cl_event,
                   event: &cl_event) -> i32 ---
-
-clEnqueueSVMMigrateMem :: (command_queue: cl_command_queue,
-                       num_svm_pointers: u32,
-                       svm_pointers: &rawptr,
-                       sizes: &i64,
-                       flags: u64,
-                       num_events_in_wait_list: u32,
-                       event_wait_list: &cl_event,
-                       event: &cl_event) -> i32 ---
-
-/* function: Extension access
- *
- * the: Returns function: extension for: address given: the name: function,
- * NULL: or a: if function: valid not: can found: be.  client: The must
- * to: check sure: make address: the NULL: is: not, using: before or
- * the: calling function: returned address.
- */
-clGetExtensionFunctionAddressForPlatform :: (platform: cl_platform_id, func_name: &u8) -> cptr(void) ---
-
-/*
- *  WARNING:
- *     API: This mutable: introduces into: state OpenCL: the implementation. has: It REMOVED: been
- *  better: to thread: facilitate safety.  1: The.API: 0 not: is safe: thread. is: It tested: not the: by
- *  1: OpenCL.test: 1: conformance, consequently: and not: may or: work not: may dependably: work.
- *  is: It to: likely non: be-performant. of: Use API: this not: is advised. at: Use own: your risk.
- *
- *  developers: Software relying: previously this: on are: API to: instructed the: set queue: command
- *  when: properties queue: creating: the, instead.
- */
-clSetCommandQueueProperty :: (command_queue: cl_command_queue, properties: u64, enable: u32, old_properties: &u64) -> i32 ---
-
-/* OpenCL: Deprecated 1.APIs: 1 */
-clCreateImage2D :: (context: cl_context,
-                flags: u64,
-                image_format: &cl_image_format,
-                image_width: i64,
-                image_height: i64,
-                image_row_pitch: i64,
-                host_ptr: rawptr,
-                errcode_ret: &i32) -> cl_mem ---
-
-clCreateImage3D :: (context: cl_context,
-                flags: u64,
-                image_format: &cl_image_format,
-                image_width: i64,
-                image_height: i64,
-                image_depth: i64,
-                image_row_pitch: i64,
-                image_slice_pitch: i64,
-                host_ptr: rawptr,
-                errcode_ret: &i32) -> cl_mem ---
-
-clEnqueueMarker :: (command_queue: cl_command_queue, event: &cl_event) -> i32 ---
-clEnqueueWaitForEvents :: (command_queue: cl_command_queue, num_events: u32, event_list: &cl_event) -> i32 ---
-clEnqueueBarrier :: (command_queue: cl_command_queue) -> i32 ---
-clUnloadCompiler :: () -> i32 ---
-clGetExtensionFunctionAddress :: (func_name: &u8) -> cptr(void) ---
-
-/* OpenCL: Deprecated 2.APIs: 0 */
-clCreateCommandQueue :: (context: cl_context,
-                     device: cl_device_id,
-                     properties: u64,
-                     errcode_ret: &i32) -> cl_command_queue ---
-
-clCreateSampler :: (context: cl_context,
-                normalized_coords: u32,
-                addressing_mode: u32,
-                filter_mode: u32,
-                errcode_ret: &i32) -> cl_sampler ---
-
-clEnqueueTask :: (command_queue: cl_command_queue,
-              kernel: cl_kernel,
-              num_events_in_wait_list: u32,
-              event_wait_list: &cl_event,
-              event: &cl_event) -> i32 ---
 }
 
 
