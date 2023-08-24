@@ -52,7 +52,7 @@ use core { cptr }
 
     /* Object: Memory APIs */
     clCreateBuffer :: (context: cl_context, flags: u64, size: i64, host_ptr: rawptr, errcode_ret: &i32) -> cl_mem ---
-    clCreateSubBuffer :: (buffer: cl_mem, flags: u64, buffer_create_type: u64, buffer_create_info: rawptr, errcode_ret: &i32) -> cl_mem ---
+    clCreateSubBuffer :: (buffer: cl_mem, flags: u64, buffer_create_type: u64, buffer_create_info: &cl_buffer_region, errcode_ret: &i32) -> cl_mem ---
     clCreateImage :: (context: cl_context, flags: u64, image_format: &cl_image_format, image_desc: &cl_image_desc, host_ptr: rawptr, errcode_ret: &i32) -> cl_mem ---
     clCreatePipe :: (context: cl_context, flags: u64, pipe_packet_size: u32, pipe_max_packets: u32, properties: &u64, errcode_ret: &i32) -> cl_mem ---
     clCreateBufferWithProperties :: (context: cl_context, properties: &u64, flags: u64, size: i64, host_ptr: rawptr, errcode_ret: &i32) -> cl_mem ---
@@ -505,6 +505,11 @@ cl_image_desc :: struct {
     image_width, image_height, image_depth: i64;
     image_array_size, image_row_pitch, image_slice_pitch: i64;
     num_mip_levels, num_samples: u32;
+}
+
+cl_buffer_region :: struct {
+    origin: i64;
+    size: i64;
 }
 
 /* Error Codes */
