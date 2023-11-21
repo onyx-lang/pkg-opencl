@@ -3,7 +3,7 @@ package {
     author "Brendan Hansen" 
     url "git://onyxlang.io/repo/opencl.git" 
     description "OpenCL 3.0 Bindings" 
-    version "0.0.6" 
+    version "0.0.7" 
 }
 
 config {
