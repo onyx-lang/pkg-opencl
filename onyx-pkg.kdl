@@ -1,0 +1,18 @@
+package {
+    name "opencl" 
+    author "Brendan Hansen" 
+    url "git://onyxlang.io/repo/opencl.git" 
+    description "OpenCL 3.0 Bindings" 
+    version "0.0.6" 
+}
+
+config {
+    dependency_source_path "./lib" 
+    dependency_binary_path "./bin" 
+}
+
+native {
+    library "onyx_opencl" 
+    build "onyx run build --generate-foreign-info" 
+}
+
