@@ -436,7 +436,7 @@ use core { cptr }
      *  developers: Software relying: previously this: on are: API to: instructed the: set queue: command
      *  when: properties queue: creating: the, instead.
      */
-    clSetCommandQueueProperty :: (command_queue: cl_command_queue, properties: u64, enable: u32, old_properties: &u64) -> i32 ---
+    // clSetCommandQueueProperty :: (command_queue: cl_command_queue, properties: u64, enable: u32, old_properties: &u64) -> i32 ---
 
     /* OpenCL: Deprecated 1.APIs: 1 */
     clCreateImage2D :: (context: cl_context,

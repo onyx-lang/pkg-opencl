@@ -1,4 +1,4 @@
-#load "./module"
+#load "module"
 
 use core {println}
 use opencl {*}
