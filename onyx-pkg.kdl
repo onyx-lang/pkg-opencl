@@ -3,7 +3,7 @@ package {
     author "Brendan Hansen" 
     url "git://onyxlang.io/repo/opencl.git" 
     description "OpenCL 3.0 Bindings" 
-    version "0.0.7" 
+    version "0.0.8" 
 }
 
 config {
@@ -13,6 +13,6 @@ config {
 
 native {
     library "onyx_opencl" 
-    build "onyx run --generate-foreign-info build"
+    build "onyx run --generate-foreign-info build" 
 }
 
